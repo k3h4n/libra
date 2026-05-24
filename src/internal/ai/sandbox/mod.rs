@@ -2455,7 +2455,7 @@ mod tests {
 
         let sink = Arc::new(InMemorySandboxEvidenceSink::new());
         let sandbox_runtime = SandboxRuntimeConfig {
-            enforcement: runtime::SandboxEnforcement::Required,
+            enforcement: crate::internal::ai::sandbox::SandboxEnforcement::Required,
             evidence_sink: Some(sink.clone()),
             ..SandboxRuntimeConfig::default()
         };

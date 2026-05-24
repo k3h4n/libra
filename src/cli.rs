@@ -321,6 +321,8 @@ enum Commands {
     Log(command::log::LogArgs),
     #[command(about = "Summarize commit history by author", alias = "slog")]
     Shortlog(command::shortlog::ShortlogArgs),
+    #[command(about = "Show file count statistics by extension")]
+    Stats(command::stats::StatsArgs),
     #[command(about = "Show various types of objects")]
     Show(command::show::ShowArgs),
     #[command(about = "List references in a local repository")]
@@ -860,6 +862,7 @@ fn command_preflight(command: &Commands) -> CliResult<CommandPreflight> {
         Commands::Init(_)
         | Commands::Clone(_)
         | Commands::Open(_)
+        | Commands::Stats(_)
         | Commands::CodeControl(_)
         | Commands::LsRemote(_)
         | Commands::Sandbox(_) => Ok(CommandPreflight::none()),
@@ -1150,6 +1153,7 @@ pub async fn parse_async(args: Option<&[&str]>) -> CliResult<()> {
         Commands::Lfs(cmd) => command::lfs::execute_safe(cmd, &output).await?,
         Commands::Log(cmd_args) => command::log::execute_safe(cmd_args, &output).await?,
         Commands::Shortlog(cmd_args) => command::shortlog::execute_safe(cmd_args, &output).await?,
+        Commands::Stats(cmd_args) => command::stats::execute_safe(cmd_args, &output).await?,
         Commands::Show(cmd_args) => command::show::execute_safe(cmd_args, &output).await?,
         Commands::ShowRef(cmd_args) => command::show_ref::execute_safe(cmd_args, &output).await?,
         Commands::LsRemote(cmd_args) => command::ls_remote::execute_safe(cmd_args, &output).await?,
